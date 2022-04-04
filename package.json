@@ -5,6 +5,7 @@
   "main": "webapi.js",
   "type": "module",
   "scripts": {
+    "start": "node webapi.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
