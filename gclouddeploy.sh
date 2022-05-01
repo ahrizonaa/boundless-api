@@ -1,3 +1,3 @@
 # https://cloud.google.com/sdk/gcloud/reference/app/deploy
-gcloud app deloy ./app.yaml -y
+gcloud app deploy ./app.yaml -q
 gcloud app browse
