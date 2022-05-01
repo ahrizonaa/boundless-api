@@ -2,10 +2,10 @@
   "name": "mongodb.api",
   "version": "1.0.0",
   "description": "",
-  "main": "webapi.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node webapi.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
