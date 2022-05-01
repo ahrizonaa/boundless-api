@@ -33,6 +33,20 @@ class AppsController extends Controller {
       });
       client.close();
     });
+
+    this.post("/add", async (req, res) => {
+      let client = this.utils.getClient();
+      await client.connect();
+
+      let result = await client.db("IdeaCollab").collection("Apps").insertOne({
+        name: req.body.name,
+        originator: req.body.originator,
+        features: req.body.features,
+        timeline: req.body.timeline,
+      });
+      res.send(result);
+      client.close();
+    });
   }
 }
 
