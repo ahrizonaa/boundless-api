@@ -11,8 +11,9 @@ A nice project with a nice description
 ###
 
 ## Install
-
-    $ clone this repo
+    $ git clone https://github.com/missahrizona/girlcode-api
+    $ cd girlcode-api
+    $ npm i
 
 ## Configure app
 
