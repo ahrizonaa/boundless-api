@@ -24,6 +24,6 @@ Edit `.env` in root directory of project.
 
     $ npm start
 
-## Start with live reload (watches for changes to js, html, css and reloads browser):
+## Run with live reload (watches for changes to js, html, css and reloads browser):
 
     $ npm run watch
