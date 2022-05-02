@@ -13,19 +13,20 @@ import { AuthController } from "./controllers/authController.js";
 
 config();
 
-const liveReloadServer = livereload.createServer();
-liveReloadServer.server.once("connection", () => {
-  setTimeout(() => {
-    liveReloadServer.refresh("/");
-  }, 100);
-});
-
 // express restful app
 const app = express();
-const port = process.env.port || 8080;
+
+if (process.env.USERDOMAIN == process.env.LOCALUSERDOMAIN) {
+  const liveReloadServer = livereload.createServer();
+  liveReloadServer.server.once("connection", () => {
+    setTimeout(() => {
+      liveReloadServer.refresh("/");
+    }, 100);
+  });
+  app.use(connectLiveReload());
+}
 
 app.set("json spaces", 4);
-app.use(connectLiveReload());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +37,7 @@ app.use("/apps", new AppsController());
 app.use("/features", new FeaturesController());
 app.use("/auth", new AuthController());
 
+const port = process.env.port || 8080;
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
