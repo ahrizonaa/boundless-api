@@ -45,22 +45,16 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
 ## Install
 
-    $ git clone https://github.com/YOUR_USERNAME/PROJECT_TITLE
-    $ cd PROJECT_TITLE
-    $ yarn install
+    $ clone this repo
 
 ## Configure app
 
-Open `a/nice/path/to/a.file` then edit it with your settings. You will need:
-
-- A setting;
-- Another setting;
-- One more setting;
+Open `.env` in root directory of project.
 
 ## Running the project
 
-    $ yarn start
+    $ npm start
 
-## Simple build for production
+## Start with live reload (watches for changes to js, html, css and reloads browser):
 
-    $ yarn build
+    $ npm run watch
