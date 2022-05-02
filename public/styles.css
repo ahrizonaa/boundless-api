@@ -154,17 +154,37 @@ code {
 }
 .uk-search-input {
   color: #ededed !important;
+  background-color: rgba(33, 33, 33, 0.859) !important;
+  border-radius: 5px !important;
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
 }
-
+.uk-search-input::placeholder {
+  color: white !important;
+}
 #list {
   position: relative;
 }
 
 .list-item {
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  animation: slide-in 50ms ease-in-out forwards;
+  padding: 25px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08), 0px 3px 4px rgba(0, 0, 0, 0.1),
+    0px 1px 4px -1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
-.list-item-off-page {
-  position: absolute;
-  width: 93%;
-  transform: translateY(300%);
+.list-item:hover {
+  transform: scale(1.009);
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(50vh);
+  }
+  to {
+    transform: translateY(0);
+  }
 }

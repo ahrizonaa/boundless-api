@@ -1,4 +1,4 @@
-import { debounce, filterList } from "./assets/scripts/core";
+import { debounce, filterList } from "./assets/scripts/core.js";
 
 document.getElementById("heading").addEventListener("animationend", (evt) => {
   if (evt.animationName == "slide-in-blurred-bl") {
@@ -24,5 +24,5 @@ document.getElementById("uk-search-input").addEventListener("input", (evt) => {
     listid: "list",
   };
 
-  debounce(0, filterList, params);
+  debounce(200, filterList, params);
 });
