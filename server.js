@@ -3,6 +3,7 @@ import cors from "cors";
 import jwt from "jsonwebtoken";
 import expressJWT from "express-jwt";
 import { config } from "dotenv";
+// import { livereload, connectLiveReload } from "./imports.js";
 
 import { IndexController } from "./controllers/indexController.js";
 import { AppsController } from "./controllers/appsController.js";
@@ -14,7 +15,7 @@ config();
 // express restful app
 const app = express();
 
-if (process.env.USERDOMAIN == process.env.LOCALUSERDOMAIN) {
+if (false) {
   const liveReloadServer = livereload.createServer();
   liveReloadServer.server.once("connection", () => {
     setTimeout(() => {
