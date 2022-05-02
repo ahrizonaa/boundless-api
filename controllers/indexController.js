@@ -4,7 +4,7 @@ class IndexController extends Controller {
   constructor() {
     super();
     this.get("/", (req, res) => {
-      res.send("<h1>GirlCode MongoDB Rest Api</h1>");
+      res.sendFile(process.cwd() + "/public/index.html");
     });
   }
 }
