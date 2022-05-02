@@ -1,4 +1,4 @@
-# girlcode-api
+# Idea Collab API
 
 ---
 ## Requirements
@@ -9,8 +9,8 @@
 ###
 
 ## Install
-    $ git clone https://github.com/missahrizona/girlcode-api
-    $ cd girlcode-api
+    $ git clone https://github.com/missahrizona/ideacollab.api
+    $ cd ideacollab.api
     $ npm i
 
 ## Configure app
