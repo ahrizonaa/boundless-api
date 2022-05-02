@@ -19,104 +19,127 @@
         </span>
       </div>
 
-      <dl id="list" class="uk-description-list uk-description-list-divider">
-        <dt>
-          /
-          <span style="float: right" class="uk-label uk-label-primary"
-            >GET</span
-          >
-        </dt>
-        <dd>You are here!</dd>
-        <dt>
-          /apps
-          <span style="float: right" class="uk-label uk-label-primary"
-            >GET</span
-          >
-        </dt>
-        <dd>List all apps</dd>
-        <dt>
-          /apps/create
-          <span style="float: right" class="uk-label uk-label-success"
-            >POST</span
-          >
-        </dt>
-        <dd>
-          Post - Creates a new app, saves to mongodb
-          <br />
-          <code>
-            body = {<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;name: string,<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;originator: string,<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;collaborators: string[],<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;features: string[],<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;timeline: string[]<br />
-            }
-          </code>
-        </dd>
-        <dt>
-          /apps/initiate
-          <span style="float: right" class="uk-label uk-label-success"
-            >POST</span
-          >
-        </dt>
-        <dd>
-          <code>
-            body = {<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;_id: string<br />
-            }
-          </code>
-        </dd>
-        <dt>
-          /features/save
-          <span style="float: right" class="uk-label uk-label-success"
-            >POST</span
-          >
-        </dt>
-        <dd>
-          <code>
-            body = {<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;_id: string<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;feature: string<br />
-            }
-          </code>
-        </dd>
-        <dt>
-          /features/delete
-          <span style="float: right" class="uk-label uk-label-success"
-            >POST</span
-          >
-        </dt>
-        <dd>
-          <code>
-            body = {<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;_id: string<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;feature: string<br />
-            }
-          </code>
-        </dd>
-      </dl>
+      <div
+        uk-filter="target: .uk-description-list"
+        id="list-content"
+        class="list-content"
+      >
+        <div class="uk-margin">
+          <form class="uk-search uk-search-default">
+            <span uk-search-icon></span>
+            <input
+              id="uk-search-input"
+              class="uk-search-input"
+              type="search"
+              placeholder="Search"
+            />
+          </form>
+        </div>
+
+        <dl id="list" class="uk-description-list uk-description-list-divider">
+          <div class="list-item">
+            <dt>
+              /
+              <span style="float: right" class="uk-label uk-label-primary"
+                >GET</span
+              >
+            </dt>
+            <dd>You are here!</dd>
+          </div>
+          <div class="list-item">
+            <dt>
+              /apps
+              <span style="float: right" class="uk-label uk-label-primary"
+                >GET</span
+              >
+            </dt>
+            <dd>List all apps</dd>
+          </div>
+
+          <div class="list-item">
+            <dt>
+              /apps/create
+              <span style="float: right" class="uk-label uk-label-success"
+                >POST</span
+              >
+            </dt>
+            <dd>
+              Creates a new app, saves to mongodb
+              <br />
+              <code>
+                body = {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;name: string,<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;originator: string,<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;collaborators: string[],<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;features: string[],<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;timeline: string[]<br />
+                }
+              </code>
+            </dd>
+          </div>
+
+          <div class="list-item">
+            <dt>
+              /apps/initiate
+              <span style="float: right" class="uk-label uk-label-success"
+                >POST</span
+              >
+            </dt>
+            <dd>
+              Updates the apps initiated state to true
+              <br />
+              <code>
+                body = {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;_id: string<br />
+                }
+              </code>
+            </dd>
+          </div>
+
+          <div class="list-item">
+            <dt>
+              /features/save
+              <span style="float: right" class="uk-label uk-label-success"
+                >POST</span
+              >
+            </dt>
+            <dd>
+              Appends a new feature to an existing apps feature list
+              <br />
+              <code>
+                body = {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;_id: string<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;feature: string<br />
+                }
+              </code>
+            </dd>
+          </div>
+          <div class="list-item">
+            <dt>
+              /features/delete
+              <span style="float: right" class="uk-label uk-label-success"
+                >POST</span
+              >
+            </dt>
+            <dd>
+              Deletes a feature from an existing apps feature list
+              <br />
+              <code>
+                body = {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;_id: string<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;feature: string<br />
+                }
+              </code>
+            </dd>
+          </div>
+        </dl>
+      </div>
     </div>
 
     <div class="bg-image kenburns-bottom-right"></div>
   </body>
 
-  <script type="text/javascript">
-    document
-      .getElementById("heading")
-      .addEventListener("animationend", (evt) => {
-        if (evt.animationName == "slide-in-blurred-bl") {
-          let typewriter = document.getElementById("typewriter");
-          typewriter.addEventListener("animationend", (evt) => {
-            if (evt.animationName == "animated-text") {
-              document.getElementById("emoji").classList.add("jello-vertical");
-            }
-          });
-          typewriter.classList.add("typewriter");
-
-          document.getElementById("list").classList.add("fade-in-bck");
-        }
-      });
-  </script>
+  <script type="text/javascript" src="./app.js"></script>
   <!-- UIkit JS -->
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.0/dist/js/uikit.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.0/dist/js/uikit-icons.min.js"></script>
