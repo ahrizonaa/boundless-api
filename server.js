@@ -3,8 +3,6 @@ import cors from "cors";
 import jwt from "jsonwebtoken";
 import expressJWT from "express-jwt";
 import { config } from "dotenv";
-import livereload from "livereload";
-import connectLiveReload from "connect-livereload";
 
 import { IndexController } from "./controllers/indexController.js";
 import { AppsController } from "./controllers/appsController.js";
