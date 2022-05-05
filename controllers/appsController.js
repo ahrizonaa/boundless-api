@@ -47,6 +47,25 @@ class AppsController extends Controller {
       res.send(result);
       client.close();
     });
+
+    this.delete("/delete", async (req, res) => {
+      let client = this.utils.getClient();
+      await client.connect();
+
+      let query = { _id: new ObjectId(req.body._id) };
+
+      let deletedCount = (
+        await client.db("IdeaCollab").collection("Apps").deleteOne(query)
+      ).deletedCount;
+
+      let apps = await client
+        .db("IdeaCollab")
+        .collection("Apps")
+        .find({})
+        .toArray();
+      res.send({ deletedCount, apps });
+      client.close();
+    });
   }
 }
 
