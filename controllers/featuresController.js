@@ -1,47 +1,26 @@
-import { Controller } from "./controller.js";
-import { ObjectId } from "mongodb";
+import { Controller } from './controller.js';
+import { ObjectId } from 'mongodb';
 
 class FeaturesController extends Controller {
-  constructor() {
-    super();
+	constructor(c, d) {
+		super(c, d);
 
-    this.post("/save", async (req, res) => {
-      let client = this.utils.getClient();
-      await client.connect();
-      console.log(req.body);
-      let query = { _id: new ObjectId(req.body._id) };
-      let update = { $push: { features: req.body.feature } };
+		this.post('/save', async (req, res) => {
+			let query = { _id: new ObjectId(req.body._id) };
+			let update = { $push: { features: req.body.feature } };
 
-      let result = await client
-        .db("IdeaCollab")
-        .collection("Apps")
-        .updateOne(query, update);
-      res.send({
-        acknowledged: result.acknowledged,
-        modifiedCount: result.modifiedCount,
-        result: result,
-      });
-      client.close();
-    });
+			let result = await this.db.collection('Apps').updateOne(query, update);
+			res.send(result);
+		});
 
-    this.post("/delete", async (req, res) => {
-      let client = this.utils.getClient();
-      await client.connect();
+		this.post('/delete', async (req, res) => {
+			let query = { _id: new ObjectId(req.body._id) };
+			let deleteElement = { $pull: { features: req.body.feature } };
 
-      let query = { _id: new ObjectId(req.body._id) };
-      let deleteElement = { $pull: { features: req.body.feature } };
-
-      let result = await client
-        .db("IdeaCollab")
-        .collection("Apps")
-        .updateOne(query, deleteElement);
-      res.send({
-        acknowledged: result.acknowledged,
-        modifiedCount: result.modifiedCount,
-      });
-      client.close();
-    });
-  }
+			let result = await this.db.collection('Apps').updateOne(query, deleteElement);
+			res.send(result);
+		});
+	}
 }
 
 export { FeaturesController };

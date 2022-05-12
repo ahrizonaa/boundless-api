@@ -1,13 +1,19 @@
-import { Router } from "express";
-import { Utils } from "../utils.js";
+import { Router } from 'express';
+import { Utils } from '../lib/utils.js';
+import { config } from 'dotenv';
 
 class Controller extends Router {
-  constructor() {
-    super();
-    this.utils = Utils;
-  }
+	constructor(client, db) {
+		super();
+		config();
+		this.utils = Utils;
+		this.client = client;
+		this.db = db;
+	}
 
-  utils;
+	db;
+	client;
+	utils;
 }
 
 export { Controller };
