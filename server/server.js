@@ -24,7 +24,7 @@ server.use(express.urlencoded({ extended: true }));
 server.use(express.static("public"));
 
 server.use("/", new IndexController(client, db));
-server.use("/servers", new AppsController(client, db));
+server.use("/apps", new AppsController(client, db));
 server.use("/features", new FeaturesController(client, db));
 server.use("/auth", new AuthController(client, db));
 server.use("/settings", new SettingsController(client, db));
