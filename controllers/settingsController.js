@@ -1,42 +1,35 @@
-import { Controller } from './controller.js';
-import { ObjectId } from 'mongodb';
+import { Controller } from "./controller.js";
+import { ObjectId } from "mongodb";
 
 export class SettingsController extends Controller {
-	constructor(c, d) {
-		super(c, d);
+  constructor(c, d) {
+    super(c, d);
 
-		this.post('/save', async (req, res) => {
-			let setting = {
-				userId: '',
-				darkMode: true,
-				theme: 1,
-				background: 4,
-			};
+    this.post("/save", async (req, res) => {
+      let collection = this.db.collection("Users");
 
-			let query = { _id: new ObjectId(req.body._id) };
-			let update = { $push: { features: req.body.feature } };
+      let settings = Object.keys(req.body.settings);
 
-			let collection = this.db.collection('Users');
+      let response = {
+        modifiedCount: 0,
+      };
 
-			let fields = Object.keys(req.body);
+      for (let i = 0; i < settings.length; i++) {
+        let query = { _id: new ObjectId(req.body.user._id) };
+        let property = `settings.${settings[i]}`;
+        let updateVal = {};
+        updateVal[property] = req.body.settings[settings[i]];
 
-			let response = {
-				modifiedCount: 0,
-			};
+        let update = { $set: updateVal };
+        let result = await collection.updateOne(query, update);
+        response.modifiedCount += result.modifiedCount;
+      }
 
-			for (let i = 0; i < fields.length; i++) {
-				let query = { _id: new ObjectId(req.body._id) };
-				let property = `settings.${fields[i]}`;
-				let settings = {};
-				settings[property] = req.body[property];
+      res.send(response);
+    });
 
-				let update = { $set: setting };
-
-				let result = await collection.updateOne(query, update);
-				response.modifiedCount += result.modifiedCount;
-			}
-
-			res.send(response);
-		});
-	}
+    this.post("/backgrounds", async (req, res) => {
+      //
+    });
+  }
 }

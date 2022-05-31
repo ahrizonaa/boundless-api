@@ -19,8 +19,8 @@ import {
 
 server.set("json spaces", 4);
 server.use(cors());
-server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
+server.use(express.json({ limit: "50mb" }));
+server.use(express.urlencoded({ extended: true, limit: "50mb" }));
 server.use(express.static("public"));
 
 server.use("/", new IndexController(client, db));
