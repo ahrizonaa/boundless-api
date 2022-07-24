@@ -31,10 +31,10 @@ class AuthController extends Controller {
 
     this.post("/requestcode", async (req, res) => {
       let code = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
-      let msg = `One time code:\n${code}`;
+      let textmsg = `One time code:\n${code}`;
       await this.twilio.messages
         .create({
-          body: msg,
+          body: textmsg,
           to: req.body.tel,
           from: process.env.TWILIO_PHONE_NUMBER,
         })
