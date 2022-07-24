@@ -1,73 +1,54 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="./styles.css" />
-    <!-- UIkit CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/uikit@3.14.0/dist/css/uikit.min.css"
-    />
-    <title>Idear Api</title>
-  </head>
-  <body>
-    <div class="viewport">
-      <div class="heading-content">
-        <span id="heading" class="heading-text slide-in-blurred-bl"
-          >Oh hi!</span
-        >
+<head>
+  <link rel="stylesheet" href="./styles.css" />
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.0/dist/css/uikit.min.css" />
+  <title>Mydea API</title>
+</head>
+<body>
+  <div class="viewport">
+    <div class="heading-content">
+      <span id="heading" class="heading-text slide-in-blurred-bl">Oh hi!</span>
 
-        <span id="typewriter" class="typewriter-content">
-          available rest routes...<span id="emoji">&#128516;</span>
-        </span>
+      <span id="typewriter" class="typewriter-content">
+        available rest routes...<span id="emoji">&#128516;</span>
+      </span>
+    </div>
+
+    <div uk-filter="target: .uk-description-list" id="list-content" class="list-content">
+      <div class="uk-margin">
+        <form class="uk-search uk-search-default">
+          <span uk-search-icon></span>
+          <input id="uk-search-input" class="uk-search-input" type="search"
+            placeholder="Search anything ... &#10083;" />
+        </form>
       </div>
 
-      <div
-        uk-filter="target: .uk-description-list"
-        id="list-content"
-        class="list-content"
-      >
-        <div class="uk-margin">
-          <form class="uk-search uk-search-default">
-            <span uk-search-icon></span>
-            <input
-              id="uk-search-input"
-              class="uk-search-input"
-              type="search"
-              placeholder="Search anything ... &#10083;"
-            />
-          </form>
+      <dl id="list" class="uk-description-list uk-description-list-divider">
+        <div class="list-item">
+          <dt>
+            <a href="/" target="_blank">/</a>
+            <span style="float: right" class="uk-label uk-label-primary">GET</span>
+          </dt>
+          <dd>You are here!</dd>
+        </div>
+        <div class="list-item">
+          <dt>
+            <a href="/apps" target="_blank">/apps</a>
+            <span style="float: right" class="uk-label uk-label-primary">GET</span>
+          </dt>
+          <dd>List all apps</dd>
         </div>
 
-        <dl id="list" class="uk-description-list uk-description-list-divider">
-          <div class="list-item">
-            <dt>
-              <a href="/" target="_blank">/</a>
-              <span style="float: right" class="uk-label uk-label-primary"
-                >GET</span
-              >
-            </dt>
-            <dd>You are here!</dd>
-          </div>
-          <div class="list-item">
-            <dt>
-              <a href="/apps" target="_blank">/apps</a>
-              <span style="float: right" class="uk-label uk-label-primary"
-                >GET</span
-              >
-            </dt>
-            <dd>List all apps</dd>
-          </div>
-
-          <div class="list-item">
-            <dt>
-              <a href="/apps/create" target="_blank">/apps/create</a>
-              <span style="float: right" class="uk-label uk-label-success"
-                >POST</span
-              >
-            </dt>
-            <dd>
-              Creates a new app, saves to mongodb
-              <br />
-              <code>
+        <div class="list-item">
+          <dt>
+            <a href="/apps/create" target="_blank">/apps/create</a>
+            <span style="float: right" class="uk-label uk-label-success">POST</span>
+          </dt>
+          <dd>
+            Creates a new app, saves to mongodb
+            <br />
+            <code>
                 body = {<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;name: string,<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;originator: string,<br />
@@ -76,71 +57,65 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;timeline: string[]<br />
                 }
               </code>
-            </dd>
-          </div>
+          </dd>
+        </div>
 
-          <div class="list-item">
-            <dt>
-              <a href="/apps/initiate" target="_blank">/apps/initiate</a>
-              <span style="float: right" class="uk-label uk-label-success"
-                >POST</span
-              >
-            </dt>
-            <dd>
-              Updates the apps initiated state to true
-              <br />
-              <code>
+        <div class="list-item">
+          <dt>
+            <a href="/apps/initiate" target="_blank">/apps/initiate</a>
+            <span style="float: right" class="uk-label uk-label-success">POST</span>
+          </dt>
+          <dd>
+            Updates the apps initiated state to true
+            <br />
+            <code>
                 body = {<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;_id: string<br />
                 }
               </code>
-            </dd>
-          </div>
+          </dd>
+        </div>
 
-          <div class="list-item">
-            <dt>
-              <a href="/features/save" target="_blank">/features/save</a>
-              <span style="float: right" class="uk-label uk-label-success"
-                >POST</span
-              >
-            </dt>
-            <dd>
-              Appends a new feature to an existing apps feature list
-              <br />
-              <code>
+        <div class="list-item">
+          <dt>
+            <a href="/features/save" target="_blank">/features/save</a>
+            <span style="float: right" class="uk-label uk-label-success">POST</span>
+          </dt>
+          <dd>
+            Appends a new feature to an existing apps feature list
+            <br />
+            <code>
                 body = {<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;_id: string,<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;feature: string<br />
                 }
               </code>
-            </dd>
-          </div>
-          <div class="list-item">
-            <dt>
-              <a href="/features/delete" target="_blank">/features/delete</a>
-              <span style="float: right" class="uk-label uk-label-danger"
-                >DELETE</span
-              >
-            </dt>
-            <dd>
-              Deletes a feature from an existing apps feature list
-              <br />
-              <code>
+          </dd>
+        </div>
+        <div class="list-item">
+          <dt>
+            <a href="/features/delete" target="_blank">/features/delete</a>
+            <span style="float: right" class="uk-label uk-label-danger">DELETE</span>
+          </dt>
+          <dd>
+            Deletes a feature from an existing apps feature list
+            <br />
+            <code>
                 body = {<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;_id: string<br />
                 }
               </code>
-            </dd>
-          </div>
-        </dl>
-      </div>
+          </dd>
+        </div>
+      </dl>
     </div>
+  </div>
 
-    <div class="bg-image kenburns-bottom-right"></div>
-  </body>
+  <div class="bg-image kenburns-bottom-right"></div>
+</body>
 
-  <script type="module" type="text/javascript" src="./app.js"></script>
-  <!-- UIkit JS -->
-  <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.0/dist/js/uikit.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.0/dist/js/uikit-icons.min.js"></script>
+<script type="module" type="text/javascript" src="./app.js"></script>
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.14.0/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.14.0/dist/js/uikit-icons.min.js"></script>
 </html>
