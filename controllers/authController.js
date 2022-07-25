@@ -31,7 +31,7 @@ class AuthController extends Controller {
 
     this.post("/requestcode", async (req, res) => {
       let code = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
-      let textmsg = `One time code:\n${code}`;
+      let textmsg = `${code} is your security code from Charmee`;
       await this.twilio.messages
         .create({
           body: textmsg,
