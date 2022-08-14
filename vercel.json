@@ -1,10 +1,10 @@
 {
-   "version": 2,
+   "version": 3,
    "name": "mydea-api",
    "builds": [
       { "src": "app.js", "use": "@vercel/node" }
    ],
    "routes": [
-      { "src": "/(.*)", "dest": "/" }
+      { "src": "/(.*)", "dest": "/app.js" }
    ]
 }
