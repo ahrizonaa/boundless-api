@@ -6,6 +6,4 @@ server.listen(port, () => {
 });
 
 
-const app = server;
-
-module.exports = app;
+export default server;
