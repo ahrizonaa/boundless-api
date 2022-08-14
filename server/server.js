@@ -29,5 +29,3 @@ server.use("/features", new FeaturesController(client, db));
 server.use("/auth", new AuthController(client, db));
 server.use("/settings", new SettingsController(client, db));
 server.use("/timeline", new TimelineController(client, db));
-
-export { server };
