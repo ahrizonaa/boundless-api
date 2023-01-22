@@ -12,7 +12,7 @@ import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import expressJWT from 'express-jwt';
-import { client, db } from '../lib/client.js';
+import { client, db, espclient } from '../lib/client.js';
 
 import {
 	IndexController,
@@ -48,7 +48,10 @@ wss.on('connection', async function (ws) {
 		payload['protocol'] = 'wss';
 
 		try {
-			await client.db('ESP32SensorData').collection('WebSocketDataFeed').insertOne(payload);
+			await espclient
+				.db('ESP32SensorData')
+				.collection('WebSocketDataFeed')
+				.insertOne(payload);
 		} catch (e) {
 			console.log(e);
 		}
