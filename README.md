@@ -1,17 +1,14 @@
 # Idea Collab API
 
 ---
+
 ## Requirements
 
 ### Node
-- [official Node.js website](https://nodejs.org/)
+
+-   [official Node.js website](https://nodejs.org/)
 
 ###
-
-## Install
-    $ git clone https://github.com/missahrizona/ideacollab.api
-    $ cd ideacollab.api
-    $ npm i
 
 ## Configure app
 

@@ -5,7 +5,7 @@ export class PerksController extends Controller {
 	constructor(c, d) {
 		super(c, d);
 
-		this.post('/fetch', async (req, res) => {
+		this.get('/fetch', async (req, res) => {
 			try {
 				let perkCollection = this.db.collection('Perks');
 

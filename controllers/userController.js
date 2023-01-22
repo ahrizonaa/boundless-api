@@ -57,6 +57,7 @@ class UserController extends Controller {
 
 		this.post('/create', async (req, res) => {
 			try {
+				req.body.settings['bgindex'] = 2;
 				let result = await this.db.collection('Users').insertOne({
 					tel: req.body.tel,
 					displayname: req.body.displayname,
