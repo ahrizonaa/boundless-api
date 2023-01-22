@@ -1,5 +1,9 @@
 const server = express();
 
+const wss = new WebSocket.Server({
+	noServer: true,
+});
+
 import { config } from 'dotenv';
 config();
 import express from 'express';
@@ -33,5 +37,30 @@ server.use('/settings', new SettingsController(client, db));
 server.use('/timeline', new TimelineController(client, db));
 server.use('/twilio', new TwilioController(client, db));
 server.use('/perks', new PerksController(client, db));
+
+server.on('upgrade', (request, socket, head) => {
+	wss.handleUpgrade(request, socket, head, (websocket) => {
+		wss.emit('connection', websocket, request);
+	});
+});
+
+wss.on('connection', async function (ws) {
+	console.log('new conneciton established');
+	ws.on('message', async function (msgStr) {
+		let payload = JSON.parse(msgStr.toString());
+		payload['utc'] = new Date(Date.now()).toISOString();
+		payload['protocol'] = 'wss';
+
+		try {
+			await client.db('ESP32SensorData').collection('WebSocketDataFeed').insertOne(payload);
+		} catch (e) {
+			console.log(e);
+		}
+	});
+
+	ws.on('close', function () {
+		console.log('closing client connection');
+	});
+});
 
 export { server };
