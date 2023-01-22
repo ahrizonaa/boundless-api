@@ -1,6 +1,8 @@
 const server = express();
 
-const wss = new WebSocket.Server({
+import { WebSocketServer } from 'ws';
+
+const wss = new WebSocketServer({
 	noServer: true,
 });
 
@@ -38,12 +40,6 @@ server.use('/timeline', new TimelineController(client, db));
 server.use('/twilio', new TwilioController(client, db));
 server.use('/perks', new PerksController(client, db));
 
-server.on('upgrade', (request, socket, head) => {
-	wss.handleUpgrade(request, socket, head, (websocket) => {
-		wss.emit('connection', websocket, request);
-	});
-});
-
 wss.on('connection', async function (ws) {
 	console.log('new conneciton established');
 	ws.on('message', async function (msgStr) {
@@ -63,4 +59,4 @@ wss.on('connection', async function (ws) {
 	});
 });
 
-export { server };
+export { server, wss };
