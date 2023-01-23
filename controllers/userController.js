@@ -71,7 +71,7 @@ class UserController extends Controller {
 			}
 		});
 
-		this.put('/displayname', async (req, res) => {
+		this.post('/displayname', async (req, res) => {
 			try {
 				let query = { _id: new ObjectId(req.body._id) };
 				let update = { $set: { displayname: req.body.displayname } };
