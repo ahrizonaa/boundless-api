@@ -33,7 +33,7 @@ class AppsController extends Controller {
 					},
 				];
 
-				let result = await apps.find({ originator: { $in: [new ObjectId(req.body.userid)] } }).aggregate(agg).toArray();
+				let result = await apps.aggregate(agg).toArray();
 
 				res.status(200).send(result);
 			} catch (exception) {
