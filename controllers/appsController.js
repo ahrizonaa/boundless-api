@@ -5,11 +5,16 @@ class AppsController extends Controller {
 	constructor(c, d) {
 		super(c, d);
 
-		this.get('/fetch', async (req, res) => {
+		this.post('/fetch', async (req, res) => {
 			try {
 				let apps = this.db.collection('Apps');
 
 				const agg = [
+					{
+						$match: {
+						  'originator': new ObjectId(req.body.userid)
+						}
+					},
 					{
 						$lookup: {
 							from: 'Users',
@@ -28,7 +33,7 @@ class AppsController extends Controller {
 					},
 				];
 
-				let result = await apps.aggregate(agg).toArray();
+				let result = await apps.find({ originator: { $in: [new ObjectId(req.body.userid)] } }).aggregate(agg).toArray();
 
 				res.status(200).send(result);
 			} catch (exception) {
