@@ -1,5 +1,4 @@
 import { server, wss } from './server/server.js';
-
 const port = process.env.port || 8080;
 
 const httpServer = server.listen(port, () => {
