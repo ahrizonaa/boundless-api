@@ -6,6 +6,7 @@ import { SettingsController } from './settingsController.js';
 import { TimelineController } from './timelineController.js';
 import { TwilioController } from './twilioController.js';
 import { PerksController } from './perksController.js';
+import { NimblewearController } from './nimblewearController.js';
 
 export {
 	AppsController,
@@ -16,4 +17,5 @@ export {
 	TimelineController,
 	TwilioController,
 	PerksController,
+	NimblewearController,
 };

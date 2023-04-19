@@ -12,7 +12,7 @@ import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import expressJWT from 'express-jwt';
-import { client, db, espclient } from '../lib/client.js';
+import { client, db, espclient, nimblewearClient } from '../lib/client.js';
 
 import {
 	IndexController,
@@ -23,6 +23,7 @@ import {
 	TimelineController,
 	TwilioController,
 	PerksController,
+	NimblewearController,
 } from '../controllers/index.js';
 
 server.set('json spaces', 4);
@@ -39,6 +40,11 @@ server.use('/settings', new SettingsController(client, db));
 server.use('/timeline', new TimelineController(client, db));
 server.use('/twilio', new TwilioController(client, db));
 server.use('/perks', new PerksController(client, db));
+
+server.use(
+	'/nimblewear',
+	new NimblewearController(nimblewearClient, nimblewearClient.db('Nimblewear'))
+);
 
 wss.on('connection', async function (ws) {
 	console.log('new conneciton established');
