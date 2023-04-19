@@ -5,6 +5,16 @@ import { twilioclient } from '../lib/twilioclient.js';
 import { imagekitclient } from '../lib/imagekitclient.js';
 
 class Controller extends Router {
+	db;
+	client;
+	utils;
+	twilio;
+	imagekitclient;
+
+	connectClient = async (client) => {
+		await client.connect();
+	};
+
 	constructor(client, db) {
 		super();
 		config();
@@ -13,13 +23,8 @@ class Controller extends Router {
 		this.db = db;
 		this.twilio = twilioclient;
 		this.imagekitclient = imagekitclient;
+		this.connectClient(this.client);
 	}
-
-	db;
-	client;
-	utils;
-	twilio;
-	imagekitclient;
 }
 
 export { Controller };

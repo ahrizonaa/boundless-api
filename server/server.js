@@ -43,7 +43,7 @@ server.use('/perks', new PerksController(client, db));
 
 server.use(
 	'/nimblewear',
-	new NimblewearController(nimblewearClient, nimblewearClient.db('Nimblewear'))
+	new NimblewearController(nimblewearClient, nimblewearClient.db('NimbleWear'))
 );
 
 wss.on('connection', async function (ws) {
