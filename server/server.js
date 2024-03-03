@@ -3,7 +3,7 @@ const server = express();
 import { WebSocketServer } from 'ws';
 
 const wss = new WebSocketServer({
-	noServer: true,
+	noServer: true
 });
 
 import { config } from 'dotenv';
@@ -23,7 +23,7 @@ import {
 	TimelineController,
 	TwilioController,
 	PerksController,
-	NimblewearController,
+	NimblewearController
 } from '../controllers/index.js';
 
 server.set('json spaces', 4);
@@ -43,7 +43,7 @@ server.use('/perks', new PerksController(client, db));
 
 server.use(
 	'/nimblewear',
-	new NimblewearController(nimblewearClient, nimblewearClient.db('NimbleWear'))
+	new NimblewearController(nimblewearClient, nimblewearClient.db('NimbelWear'))
 );
 
 wss.on('connection', async function (ws) {
