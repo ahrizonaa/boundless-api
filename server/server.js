@@ -10,9 +10,13 @@ import { config } from 'dotenv';
 config();
 import express from 'express';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
-import expressJWT from 'express-jwt';
-import { client, db, espclient, nimblewearClient } from '../lib/client.js';
+import {
+	client,
+	db,
+	espclient,
+	nimblewearClient,
+	googleClient
+} from '../lib/client.js';
 
 import {
 	IndexController,
@@ -23,7 +27,8 @@ import {
 	TimelineController,
 	TwilioController,
 	PerksController,
-	NimblewearController
+	NimblewearController,
+	GoogleSignInController
 } from '../controllers/index.js';
 
 server.set('json spaces', 4);
@@ -44,6 +49,11 @@ server.use('/perks', new PerksController(client, db));
 server.use(
 	'/nimblewear',
 	new NimblewearController(nimblewearClient, nimblewearClient.db('NimbelWear'))
+);
+
+server.use(
+	'/google',
+	new GoogleSignInController(googleClient, googleClient.db('Storage'))
 );
 
 wss.on('connection', async function (ws) {

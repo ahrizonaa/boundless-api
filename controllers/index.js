@@ -7,7 +7,7 @@ import { TimelineController } from './timelineController.js';
 import { TwilioController } from './twilioController.js';
 import { PerksController } from './perksController.js';
 import { NimblewearController } from './nimblewearController.js';
-
+import { GoogleSignInController } from './googleSignInController.js';
 export {
 	AppsController,
 	UserController,
@@ -18,4 +18,5 @@ export {
 	TwilioController,
 	PerksController,
 	NimblewearController,
+	GoogleSignInController
 };
