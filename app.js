@@ -1,5 +1,5 @@
 import { server, wss } from './server/server.js';
-const port = process.env.port || 8080;
+const port = process.env.port || 3000;
 
 const httpServer = server.listen(port, () => {
 	console.log(`http://localhost:${port}`);
