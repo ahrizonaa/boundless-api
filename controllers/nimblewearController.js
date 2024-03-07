@@ -11,7 +11,7 @@ export class NimblewearController extends Controller {
 
 		this.post('/log', async (req, res) => {
 			try {
-				let result = await this.db.collection('Logs').insertOne(req.body);
+				let result = await this.logger.log(req.body);
 				res.status(200).send(result);
 			} catch (exception) {
 				res.status(500).send(exception.message);

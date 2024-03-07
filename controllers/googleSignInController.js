@@ -6,8 +6,17 @@ class GoogleSignInController extends Controller {
 		super(c, d);
 
 		this.post('/login', async (req, res) => {
+			this.logger.info({
+				data: {
+					url: '/login'
+				}
+			});
 			let googleprofile = await VerifyGoogleUser(req.body.code);
-
+			this.logger.info({
+				data: {
+					googleprofile: googleprofile
+				}
+			});
 			if (googleprofile.error) {
 				res.send(googleprofile);
 				return;
@@ -20,6 +29,12 @@ class GoogleSignInController extends Controller {
 		});
 
 		this.get('/appsettings', async (req, res) => {
+			this.logger.info({
+				data: {
+					url: '/appsettings',
+					client_id: process.env.client_id
+				}
+			});
 			res.send({ client_id: process.env.client_id });
 		});
 	}
