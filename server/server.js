@@ -47,7 +47,7 @@ server.use('/twilio', new TwilioController(client, db));
 server.use('/perks', new PerksController(client, db));
 
 server.use(
-	'/nimblewear',
+	'/nimbelwear',
 	new NimblewearController(nimblewearClient, nimblewearClient.db('NimbelWear'))
 );
 
