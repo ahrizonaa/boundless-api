@@ -8,6 +8,7 @@ import { TwilioController } from './twilioController.js';
 import { PerksController } from './perksController.js';
 import { NimblewearController } from './nimblewearController.js';
 import { GoogleSignInController } from './googleSignInController.js';
+import { JollofController } from './jollofController.js';
 export {
 	AppsController,
 	UserController,
@@ -18,5 +19,6 @@ export {
 	TwilioController,
 	PerksController,
 	NimblewearController,
-	GoogleSignInController
+	GoogleSignInController,
+	JollofController
 };

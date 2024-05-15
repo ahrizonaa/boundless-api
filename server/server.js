@@ -28,7 +28,8 @@ import {
 	TwilioController,
 	PerksController,
 	NimblewearController,
-	GoogleSignInController
+	GoogleSignInController,
+	JollofController
 } from '../controllers/index.js';
 
 server.set('json spaces', 4);
@@ -45,6 +46,7 @@ server.use('/settings', new SettingsController(client, db));
 server.use('/timeline', new TimelineController(client, db));
 server.use('/twilio', new TwilioController(client, db));
 server.use('/perks', new PerksController(client, db));
+server.use('/jollof', new JollofController(client, db));
 
 server.use(
 	'/nimbelwear',
