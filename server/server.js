@@ -15,7 +15,8 @@ import {
 	db,
 	espclient,
 	nimblewearClient,
-	googleClient
+	googleClient,
+	jollofClient
 } from '../lib/client.js';
 
 import {
@@ -56,6 +57,11 @@ server.use(
 server.use(
 	'/google',
 	new GoogleSignInController(googleClient, googleClient.db('Storage'))
+);
+
+server.use(
+	'/google',
+	new JollofController(jollofClient, jollofClient.db('Jollof'))
 );
 
 wss.on('connection', async function (ws) {

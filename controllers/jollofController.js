@@ -18,6 +18,25 @@ export class JollofController extends Controller {
 			// }
 		});
 
+		this.post('/log', async (req, res) => {
+			try {
+				let result = await this.logger.log(req.body);
+				res.status(200).send(result);
+			} catch (exception) {
+				res.status(500).send(exception.message);
+			}
+		});
+
+		this.get('/google/appsettings', async (req, res) => {
+			this.logger.info({
+				data: {
+					url: '/appsettings',
+					client_id: process.env.google_client_id_jollof
+				}
+			});
+			res.send({ client_id: process.env.google_client_id_jollof });
+		});
+
 		// this.post('/accept', async (req, res) => {
 		// 	try {
 		// 		await this.twilio.messages
