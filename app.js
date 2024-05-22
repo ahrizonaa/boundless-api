@@ -1,3 +1,6 @@
+import { config } from 'dotenv';
+config();
+
 import { server, wss } from './server/server.js';
 const port = process.env.port || 8080;
 
