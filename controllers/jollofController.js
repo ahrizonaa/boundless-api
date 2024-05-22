@@ -37,6 +37,27 @@ export class JollofController extends Controller {
 			res.send({ client_id: process.env.google_client_id_jollof });
 		});
 
+		this.post('/createuser', async (req, res) => {
+			try {
+				let data = await this.db.collection('Users').insertOne(req.body);
+				res.send(data);
+			} catch (err) {
+				res.status(500).send(err.message);
+			}
+		});
+
+		this.post('/finduser', async (req, res) => {
+			try {
+				let userAccount = await this.db
+					.collection('Users')
+					.findOne({ email: req.body.email });
+
+				res.send({ userAccount });
+			} catch (err) {
+				res.status(500).send(err.message);
+			}
+		});
+
 		// this.post('/accept', async (req, res) => {
 		// 	try {
 		// 		await this.twilio.messages
