@@ -39,7 +39,10 @@ export class JollofController extends Controller {
 
 		this.post('/createuser', async (req, res) => {
 			try {
-				let data = await this.db.collection('Users').insertOne(req.body);
+				let data = await this.client
+					.db('Jollof')
+					.collection('Users')
+					.insertOne(req.body);
 				res.send(data);
 			} catch (err) {
 				res.status(500).send(err.message);
@@ -48,9 +51,10 @@ export class JollofController extends Controller {
 
 		this.post('/finduser', async (req, res) => {
 			try {
-				let userAccount = await this.db
+				let userAccount = await this.client
+					.db('Jollof')
 					.collection('Users')
-					.findOne({ email: req.body.email });
+					.findOne({ 'user.email': req.body.email });
 
 				res.send({ userAccount });
 			} catch (err) {
