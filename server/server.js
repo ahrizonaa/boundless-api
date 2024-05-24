@@ -8,14 +8,7 @@ const wss = new WebSocketServer({
 
 import express from 'express';
 import cors from 'cors';
-import {
-	client,
-	db,
-	espclient,
-	nimblewearClient,
-	googleClient,
-	jollofClient
-} from '../lib/client.js';
+import { mongoClient } from '../lib/client.js';
 
 import {
 	IndexController,
