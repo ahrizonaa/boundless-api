@@ -29,13 +29,14 @@ class GoogleSignInController extends Controller {
 		});
 
 		this.get('/appsettings', async (req, res) => {
+			let clientId = process.env[`${req.query.appName}_GOOGLE_CLIENT_ID`];
 			this.logger.info({
 				data: {
 					url: '/appsettings',
-					client_id: process.env.client_id
+					client_id: clientId
 				}
 			});
-			res.send({ client_id: process.env.client_id });
+			res.send({ client_id: clientId });
 		});
 	}
 }
