@@ -1,5 +1,6 @@
 import { Controller } from './controller.js';
 import { ObjectId } from 'mongodb';
+import jollofService from '../services/jollofService.js';
 
 export class JollofController extends Controller {
 	constructor(mongoClient, dbName) {
@@ -31,15 +32,47 @@ export class JollofController extends Controller {
 		});
 
 		this.post('/finduser', async (req, res) => {
+			let userSearchResult = null;
 			try {
-				let userAccount = await this.mongoClient
+				userSearchResult = await this.mongoClient
 					.db(this.dbName)
 					.collection('Users')
-					.findOne({ 'user.email': req.body.email });
-				res.send({ userAccount });
+					.findOne({ 'user.email': req.body.user.email });
+
+				if (userSearchResult != null) {
+					if (
+						jollofService.isProviderMismatched(
+							req.body.provider,
+							userSearchResult
+						)
+					) {
+						let query = { 'user.email': req.body.user.email };
+						let update;
+						if (req.body.provider == 'Google') {
+							update = {
+								$set: {
+									'user.GoogleUser': req.body.user
+								}
+							};
+							userSearchResult.user.GoogleUser = req.body.user;
+						} else {
+							update = {
+								$set: {
+									'user.FacebookUser': req.body.user
+								}
+							};
+							userSearchResult.user.FacebookUser = req.body.user;
+						}
+						await this.mongoClient
+							.db(this.dbName)
+							.collection('Users')
+							.updateOne(query, update);
+					}
+				}
 			} catch (err) {
-				res.status(500).send(err.message);
+				res.status(500).send(err.message).end();
 			}
+			res.send(userSearchResult);
 		});
 
 		this.get('/appsettings', async (req, res) => {
