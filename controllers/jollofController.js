@@ -20,7 +20,10 @@ export class JollofController extends Controller {
 
 		this.post('/createuser', async (req, res) => {
 			try {
-				let data = await this.db.collection('Users').insertOne(req.body);
+				let data = await this.mongoClient
+					.db(this.dbName)
+					.collection('Users')
+					.insertOne(req.body);
 				res.send(data);
 			} catch (err) {
 				res.status(500).send(err.message);
@@ -29,10 +32,10 @@ export class JollofController extends Controller {
 
 		this.post('/finduser', async (req, res) => {
 			try {
-				let userAccount = await this.db
+				let userAccount = await this.mongoClient
+					.db(this.dbName)
 					.collection('Users')
 					.findOne({ 'user.email': req.body.email });
-
 				res.send({ userAccount });
 			} catch (err) {
 				res.status(500).send(err.message);
@@ -42,7 +45,7 @@ export class JollofController extends Controller {
 		this.get('/appsettings', async (req, res) => {
 			let settings = {
 				googleClientId: process.env.JOLLOF_GOOGLE_CLIENT_ID,
-				facebookAppId: process.env.jOLLOF_FACEBOOK_APP_ID
+				facebookAppId: process.env.JOLLOF_FACEBOOK_APP_ID
 			};
 
 			this.logger.info({

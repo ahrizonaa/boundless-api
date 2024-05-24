@@ -7,7 +7,7 @@ export class PerksController extends Controller {
 
 		this.get('/fetch', async (req, res) => {
 			try {
-				let perkCollection = this.db.collection('Perks');
+				let perkCollection = await this.mongoClient.db(this.dbName).collection('Perks');
 
 				let perks = await perkCollection.find({}).toArray();
 

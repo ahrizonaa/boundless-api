@@ -20,7 +20,7 @@ class UserController extends Controller {
 
 		this.post('/exists', async (req, res) => {
 			try {
-				let search = await this.db.collection('Users').findOne({ tel: req.body.tel });
+				let search = await this.mongoClient.db(this.dbName).collection('Users').findOne({ tel: req.body.tel });
 				res.status(200).send(search);
 			} catch (exception) {
 				res.status(500).send(exception);
@@ -32,7 +32,7 @@ class UserController extends Controller {
 				let query = { _id: new ObjectId(req.body._id) };
 				let update = { $set: { validatedon: req.body.validatedon } };
 
-				let result = await this.db.collection('Users').updateOne(query, update);
+				let result = await this.mongoClient.db(this.dbName).collection('Users').updateOne(query, update);
 
 				res.status(200).send(result);
 			} catch (exception) {
@@ -58,7 +58,7 @@ class UserController extends Controller {
 		this.post('/create', async (req, res) => {
 			try {
 				req.body.settings['bgindex'] = 2;
-				let result = await this.db.collection('Users').insertOne({
+				let result = await this.mongoClient.db(this.dbName).collection('Users').insertOne({
 					tel: req.body.tel,
 					displayname: req.body.displayname,
 					validatedon: req.body.validatedon,
@@ -76,7 +76,7 @@ class UserController extends Controller {
 				let query = { _id: new ObjectId(req.body._id) };
 				let update = { $set: { displayname: req.body.displayname } };
 
-				let result = await this.db.collection('Users').updateOne(query, update);
+				let result = await this.mongoClient.db(this.dbName).collection('Users').updateOne(query, update);
 				res.status(200).send(result);
 			} catch (exception) {
 				res.status(500).send(exception);
@@ -85,7 +85,7 @@ class UserController extends Controller {
 
 		this.post('/perk', async (req, res) => {
 			try {
-				let userCollection = this.db.collection('Users');
+				let userCollection = await this.mongoClient.db(this.dbName).collection('Users');
 
 				let query = {
 					_id: new ObjectId(req.body._id),

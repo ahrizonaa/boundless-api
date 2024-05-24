@@ -9,7 +9,10 @@ class FeaturesController extends Controller {
 			let query = { _id: new ObjectId(req.body._id) };
 			let update = { $push: { features: req.body.feature } };
 
-			let result = await this.db.collection('Apps').updateOne(query, update);
+			let result = await this.mongoClient
+				.db(this.dbName)
+				.collection('Apps')
+				.updateOne(query, update);
 			res.send(result);
 		});
 
@@ -17,7 +20,10 @@ class FeaturesController extends Controller {
 			let query = { _id: new ObjectId(req.body._id) };
 			let deleteElement = { $pull: { features: req.body.feature } };
 
-			let result = await this.db.collection('Apps').updateOne(query, deleteElement);
+			let result = await this.mongoClient
+				.db(this.dbName)
+				.collection('Apps')
+				.updateOne(query, deleteElement);
 			res.send(result);
 		});
 	}

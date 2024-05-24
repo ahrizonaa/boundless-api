@@ -37,7 +37,6 @@ server.use('/settings', new SettingsController(mongoClient, 'Mydeas'));
 server.use('/timeline', new TimelineController(mongoClient, 'Mydeas'));
 server.use('/twilio', new TwilioController(mongoClient, 'Mydeas'));
 server.use('/perks', new PerksController(mongoClient, 'Mydeas'));
-server.use('/jollof', new JollofController(mongoClient, 'Mydeas'));
 
 server.use('/nimbelwear', new NimblewearController(mongoClient, 'NimbelWear'));
 

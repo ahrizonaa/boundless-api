@@ -18,7 +18,10 @@ class TimelineController extends Controller {
 
 			let update = { $set: event };
 
-			let result = await this.db.collection('Apps').updateOne(query, update);
+			let result = await this.mongoClient
+				.db(this.dbName)
+				.collection('Apps')
+				.updateOne(query, update);
 			res.send(result);
 		});
 
@@ -37,7 +40,10 @@ class TimelineController extends Controller {
 
 			let update = { $set: event };
 
-			let result = await this.db.collection('Apps').updateOne(query, update);
+			let result = await this.mongoClient
+				.db(this.dbName)
+				.collection('Apps')
+				.updateOne(query, update);
 			res.send(result);
 		});
 	}

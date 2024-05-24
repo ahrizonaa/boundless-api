@@ -6,19 +6,19 @@ import { Logger } from '../lib/logger.js';
 
 class Controller extends Router {
 	mongoClient;
-	db;
 	utils;
 	twilio;
 	imagekitclient;
+	dbName;
 
 	constructor(mongoClient, dbName) {
 		super();
 		this.mongoClient = mongoClient;
-		this.db = this.mongoClient.db(dbName);
+		this.dbName = dbName;
 		this.utils = Utils;
 		this.twilio = twilioclient;
 		this.imagekitclient = imagekitclient;
-		this.logger = new Logger(this.db);
+		this.logger = new Logger(this.mongoClient, this.dbName);
 	}
 }
 

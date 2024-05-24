@@ -5,7 +5,10 @@ export class NimblewearController extends Controller {
 		super(mongoClient, dbName);
 
 		this.get('/home', async (req, res) => {
-			let result = await this.db.collection('Logs').insertOne({ name: 'test' });
+			let result = await this.mongoClient
+				.db(this.dbName)
+				.collection('Logs')
+				.insertOne({ name: 'test' });
 			res.status(200).send(result);
 		});
 
@@ -22,7 +25,7 @@ export class NimblewearController extends Controller {
 			let settings = {
 				googleClientId: process.env.NIMBELWEAR_GOOGLE_CLIENT_ID,
 				facebookAppId: process.env.NIMBELWEAR_FACEBOOK_APP_ID
-			}
+			};
 
 			this.logger.info({
 				data: {

@@ -7,7 +7,7 @@ export class SettingsController extends Controller {
 
 		this.post('/save', async (req, res) => {
 			try {
-				let collection = this.db.collection('Users');
+				let collection = await this.mongoClient.db(this.dbName).collection('Users');
 
 				let settings = Object.keys(req.body.settings);
 

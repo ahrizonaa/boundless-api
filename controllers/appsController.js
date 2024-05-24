@@ -7,7 +7,7 @@ class AppsController extends Controller {
 
 		this.post('/fetch', async (req, res) => {
 			try {
-				let apps = this.db.collection('Apps');
+				let apps = await this.mongoClient.db(this.dbName).collection('Apps');
 
 				const agg = [
 					{
@@ -43,7 +43,7 @@ class AppsController extends Controller {
 
 		this.post('/save', async (req, res) => {
 			try {
-				let result = await this.db.collection('Apps').insertOne({
+				let result = await this.mongoClient.db(this.dbName).collection('Apps').insertOne({
 					name: req.body.name,
 					originator: new ObjectId(req.body.originator),
 					features: req.body.features,
@@ -58,9 +58,9 @@ class AppsController extends Controller {
 		this.delete('/delete', async (req, res) => {
 			try {
 				let query = { _id: new ObjectId(req.body._id) };
-				let deletedCount = (await this.db.collection('Apps').deleteOne(query)).deletedCount;
+				let deletedCount = (await this.mongoClient.db(this.dbName).collection('Apps').deleteOne(query)).deletedCount;
 
-				let appCollection = this.db.collection('Apps');
+				let appCollection = await this.mongoClient.db(this.dbName).collection('Apps');
 
 				const agg = [
 					{
@@ -97,7 +97,7 @@ class AppsController extends Controller {
 
 				let update = { $set: event };
 
-				let result = await this.db.collection('Apps').updateOne(query, update);
+				let result = await this.mongoClient.db(this.dbName).collection('Apps').updateOne(query, update);
 				res.status(200).send(result);
 			} catch (exception) {
 				res.status(500).send(exception);
@@ -113,7 +113,7 @@ class AppsController extends Controller {
 
 				let update = { $set: event };
 
-				let result = await this.db.collection('Apps').updateOne(query, update);
+				let result = await this.mongoClient.db(this.dbName).collection('Apps').updateOne(query, update);
 				res.status(200).send(result);
 			} catch (exception) {
 				res.status(500).send(exception);
@@ -125,7 +125,7 @@ class AppsController extends Controller {
 				let query = { _id: new ObjectId(req.body._id) };
 				let update = { $push: { features: req.body.feature } };
 
-				let result = await this.db.collection('Apps').updateOne(query, update);
+				let result = await this.mongoClient.db(this.dbName).collection('Apps').updateOne(query, update);
 				res.status(200).send(result);
 			} catch (exception) {
 				res.status(500).send(exception);
@@ -137,7 +137,7 @@ class AppsController extends Controller {
 				let query = { _id: new ObjectId(req.body._id) };
 				let deleteElement = { $pull: { features: req.body.feature } };
 
-				let result = await this.db.collection('Apps').updateOne(query, deleteElement);
+				let result = await this.mongoClient.db(this.dbName).collection('Apps').updateOne(query, deleteElement);
 				res.send(result);
 			} catch (exception) {
 				res.status(500).send(exception);
