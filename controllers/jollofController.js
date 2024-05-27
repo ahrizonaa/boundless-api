@@ -19,7 +19,7 @@ export class JollofController extends Controller {
 			}
 		});
 
-		this.post('/createuser', async (req, res) => {
+		this.post('/signup', async (req, res) => {
 			try {
 				let data = await this.mongoClient
 					.db(this.dbName)
@@ -28,6 +28,69 @@ export class JollofController extends Controller {
 				res.send(data);
 			} catch (err) {
 				res.status(500).send(err.message);
+			}
+		});
+
+		this.post('/updateprofile', async (req, res) => {
+			try {
+				let result = await this.mongoClient
+					.db(this.dbName)
+					.collection('Users')
+					.updateOne(
+						{
+							'user.email': req.body.user.email
+						},
+						{
+							$set: {
+								'user.profile': req.body.user.profile
+							}
+						}
+					);
+				res.send(result);
+			} catch (err) {
+				res.status(500).send(err.message);
+			}
+		});
+
+		this.post('/unlinkgoogle', async (req, res) => {
+			try {
+				let result = await this.mongoClient
+					.db(this.dbName)
+					.collection('Users')
+					.updateOne(
+						{
+							'user.email': req.body.user.email
+						},
+						{
+							$set: {
+								'user.GoogleUser': null
+							}
+						}
+					);
+				res.send(result);
+			} catch (err) {
+				this.status(500).send(err.message);
+			}
+		});
+
+		this.post('/unlinkfacebook', async (req, res) => {
+			try {
+				let result = await this.mongoClient
+					.db(this.dbName)
+					.collection('Users')
+					.updateOne(
+						{
+							'user.email': req.body.user.email
+						},
+						{
+							$set: {
+								'user.FacebookUser': null
+							}
+						}
+					);
+				res.send(result);
+			} catch (err) {
+				this.status(500).send(err.message);
 			}
 		});
 
