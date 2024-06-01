@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.583.0",
     "@googleapis/docs": "^2.0.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
@@ -22,6 +23,7 @@
     "imagekit": "^4.1.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.4.1",
+    "multer": "^1.4.5-lts.1",
     "path": "^0.12.7",
     "twilio": "^3.77.0",
     "uuid": "^9.0.0",

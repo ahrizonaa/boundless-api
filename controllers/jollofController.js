@@ -1,6 +1,12 @@
 import { Controller } from './controller.js';
 import { ObjectId } from 'mongodb';
 import jollofService from '../services/jollofService.js';
+import { s3Client } from '../lib/s3Client.js';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+
+import multer from 'multer';
+
+var upload = multer({ storage: multer.memoryStorage() });
 
 export class JollofController extends Controller {
 	constructor(mongoClient, dbName) {
@@ -47,6 +53,43 @@ export class JollofController extends Controller {
 						}
 					);
 				res.send(result);
+			} catch (err) {
+				res.status(500).send(err.message);
+			}
+		});
+
+		this.post('/uploadphoto', upload.single('image'), async (req, res) => {
+			console.log('body', req.file);
+			try {
+				let filename = 'jollof/users/' + String(req.body.id) + '/profile.png';
+				let params = {
+					Bucket: 'mydea',
+					Key: filename,
+					Body: req.file.buffer,
+					ContentType: req.file.mimetype,
+					ACL: 'public-read'
+				};
+
+				let s3Result = await s3Client.send(new PutObjectCommand(params));
+
+				let remoteFileUrl = process.env.SPACES_CDN + '/' + filename;
+
+				let dbResult = await mongoClient
+					.db('Jollof')
+					.collection('Users')
+					.updateOne(
+						{
+							'user.email': req.body.email
+						},
+						{
+							$set: {
+								'user.profilePhotoUrl': remoteFileUrl
+							}
+						}
+					);
+				res.send({
+					profilePhotoUrl: remoteFileUrl
+				});
 			} catch (err) {
 				res.status(500).send(err.message);
 			}

@@ -8,7 +8,7 @@ const wss = new WebSocketServer({
 
 import express from 'express';
 import cors from 'cors';
-import { mongoClient } from '../lib/client.js';
+import { mongoClient } from '../lib/mongoClient.js';
 
 import {
 	IndexController,
