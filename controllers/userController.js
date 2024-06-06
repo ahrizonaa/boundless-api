@@ -115,28 +115,7 @@ class UserController extends Controller {
 		});
 
 		this.post('/profilepic', async (req, res) => {
-			var uploadOptions = {
-				file: req.body.base64String,
-				fileName: `${uuidv4()}.png`,
-				folder: '/mdyea/profilepics',
-			};
 
-			try {
-				this.imagekitclient.upload(uploadOptions, (imgkiterr, imgkitres) => {
-					if (imgkiterr) {
-						res.status(500).send(imgkiterr);
-					} else {
-						let urlOptions = { src: imgkitres.url };
-						let imgHostingUrl = this.imagekitclient.url(urlOptions);
-						res.status(200).send({ imgHostingUrl: imgHostingUrl });
-					}
-				});
-			} catch (exception) {
-				res.status(500).send({
-					error: exception,
-					msg: exception.message,
-				});
-			}
 		});
 	}
 }
