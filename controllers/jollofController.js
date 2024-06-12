@@ -180,20 +180,5 @@ export class JollofController extends Controller {
 			}
 			res.send(userSearchResult);
 		});
-
-		this.get('/appsettings', async (req, res) => {
-			let settings = {
-				googleClientId: process.env.JOLLOF_GOOGLE_CLIENT_ID,
-				facebookAppId: process.env.JOLLOF_FACEBOOK_APP_ID
-			};
-
-			this.logger.info({
-				data: {
-					url: '/appsettings',
-					settings
-				}
-			});
-			res.send(settings);
-		});
 	}
 }

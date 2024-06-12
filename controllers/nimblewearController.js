@@ -20,20 +20,5 @@ export class NimblewearController extends Controller {
 				res.status(500).send(exception.message);
 			}
 		});
-
-		this.get('/appsettings', async (req, res) => {
-			let settings = {
-				googleClientId: process.env.NIMBELWEAR_GOOGLE_CLIENT_ID,
-				facebookAppId: process.env.NIMBELWEAR_FACEBOOK_APP_ID
-			};
-
-			this.logger.info({
-				data: {
-					url: '/appsettings',
-					settings
-				}
-			});
-			res.send(settings);
-		});
 	}
 }
