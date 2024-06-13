@@ -44,6 +44,14 @@ server.use((req, res, next) => {
 	controller(req, res, next);
 });
 
+server.use('/', (req, res, next) => {
+	const host = req.get('host');
+
+	const controller = hostControllerMap[host] || defaultController;
+
+	controller(req, res, next);
+});
+
 wss.on('connection', async function (ws) {
 	console.log('new wss conneciton established');
 	ws.on('message', async function (msgStr) {
