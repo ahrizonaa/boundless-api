@@ -12,17 +12,8 @@ export class JollofController extends Controller {
 	constructor(mongoClient, dbName) {
 		super(mongoClient, dbName);
 
-		this.get('/', (req, res) => {
-			let host = req.get('host');
-			let data = {
-				host
-			};
-			console.log(data);
-			res.status(200).send(data);
-		});
-
 		this.get('/home', async (req, res) => {
-			res.status(200).send('Jollof Web API is online and ready.');
+			res.status(200).send('Jollof API is online');
 		});
 
 		this.post('/log', async (req, res) => {
