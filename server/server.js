@@ -24,7 +24,7 @@ const nimbelwearController = new NimblewearController(
 const jollofController = new JollofController(mongoClient, 'Jollof');
 
 const hostControllerMap = {
-	'boundless-api-ltlq6.ondigitalocean.app': jollofController,
+	'boundless-api-ltlq6.ondigitalocean.app': defaultController,
 	'api.nimbelwear.app': nimbelwearController,
 	'api.jolloftkn.com': jollofController,
 	'api.nightowlvibes.app': null
