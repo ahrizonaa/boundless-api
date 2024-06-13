@@ -1,13 +1,11 @@
 import express from 'express';
 import { WebSocketServer } from 'ws';
 import cors from 'cors';
-import { mongoClient } from '../lib/mongoClient.js';
+import { mongoClient } from '../lib/mongoClient';
 import {
 	IndexController,
 	NimblewearController,
-	GoogleSignInController,
-	JollofController,
-	CoreController
+	JollofController
 } from '../controllers/index.js';
 
 const server = express();
@@ -17,6 +15,7 @@ const wss = new WebSocketServer({
 });
 
 const defaultController = new IndexController(mongoClient, 'Mydeas');
+
 const nimbelwearController = new NimblewearController(
 	mongoClient,
 	'NimbelWear'
