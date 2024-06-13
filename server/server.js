@@ -24,18 +24,9 @@ const nimbelwearController = new NimblewearController(
 const jollofController = new JollofController(mongoClient, 'Jollof');
 
 const hostControllerMap = {
-	'boundless-api-ltlq6.ondigitalocean.app': {
-		name: 'default',
-		controller: jollofController
-	},
-	'api.nimbelwear.app': {
-		name: 'nimbelwear',
-		controller: nimbelwearController
-	},
-	'api.jolloftkn.com': {
-		name: 'jollof',
-		controller: jollofController
-	},
+	'boundless-api-ltlq6.ondigitalocean.app': jollofController,
+	'api.nimbelwear.app': nimbelwearController,
+	'api.jolloftkn.com': jollofController,
 	'api.nightowlvibes.app': null
 };
 
@@ -48,21 +39,10 @@ server.use('/', defaultController);
 server.use((req, res, next) => {
 	const host = req.get('host');
 
-	const { name, controller } = hostControllerMap[host] || {
-		name: 'default',
-		controller: defaultController
-	};
-
-	console.log('Found ' + name);
+	const controller = hostControllerMap[host] || defaultController;
 
 	controller(req, res, next);
-
-	console.log(name + 'controller dispatched');
 });
-// server.use('/nimbelwear');
-// server.use('/google', new GoogleSignInController(mongoClient, 'Storage'));
-// server.use('/jollof', new JollofController(mongoClient, 'Jollof'));
-// server.use('/core', new CoreController(mongoClient, 'Storage'));
 
 wss.on('connection', async function (ws) {
 	console.log('new wss conneciton established');

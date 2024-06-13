@@ -6,21 +6,8 @@ export class NimblewearController extends Controller {
 
 		this.get('/', (req, res) => {
 			let host = req.get('host');
-			let origin = req.get('origin');
 			let data = {
-				host,
-				origin
-			};
-			console.log(data);
-			res.status(200).send(data);
-		});
-
-		this.get('/nimbelwear', (req, res) => {
-			let host = req.get('host');
-			let origin = req.get('origin');
-			let data = {
-				host,
-				origin
+				host
 			};
 			console.log(data);
 			res.status(200).send(data);
