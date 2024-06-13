@@ -35,7 +35,7 @@ server.use(cors());
 server.use(express.json({ limit: '50mb' }));
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.static('public'));
-server.use('/', defaultController);
+// server.use('/', defaultController);
 server.use((req, res, next) => {
 	const host = req.get('host');
 
