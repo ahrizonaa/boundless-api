@@ -15,6 +15,17 @@ export class NimblewearController extends Controller {
 			res.status(200).send(data);
 		});
 
+		this.get('/nimbelwear', (req, res) => {
+			let host = req.get('host');
+			let origin = req.get('origin');
+			let data = {
+				host,
+				origin
+			};
+			console.log(data);
+			res.status(200).send(data);
+		});
+
 		this.get('/home', async (req, res) => {
 			let result = await this.mongoClient
 				.db(this.dbName)

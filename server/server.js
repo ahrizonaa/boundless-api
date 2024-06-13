@@ -48,7 +48,10 @@ server.use('/', defaultController);
 server.use((req, res, next) => {
 	const host = req.get('host');
 
-	const { name, controller } = hostControllerMap[host] || defaultController;
+	const { name, controller } = hostControllerMap[host] || {
+		name: 'default',
+		controller: defaultController
+	};
 
 	console.log('Found ' + name);
 
