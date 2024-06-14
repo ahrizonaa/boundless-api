@@ -1,11 +1,11 @@
 import { Controller } from './controller.js';
-import { ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 export class TwilioController extends Controller {
-	constructor(c, d) {
+	constructor(c: MongoClient, d: string) {
 		super(c, d);
 
-		this.post('/coderequest', async (req, res) => {
+		this.router.post('/coderequest', async (req, res) => {
 			try {
 				let code = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
 				let textmsg = `${code} is your security code from Charmee`;
@@ -15,7 +15,7 @@ export class TwilioController extends Controller {
 						to: req.body.tel,
 						from: process.env.TWILIO_PHONE_NUMBER,
 					})
-					.then((msg) => {
+					.then((msg: { code: number; }) => {
 						msg.code = code;
 						res.status(200).send(msg);
 					});

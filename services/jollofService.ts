@@ -1,7 +1,7 @@
 class JollofService {
 	constructor() {}
 
-	isProviderMismatched(existingProvider, userAccount) {
+	isProviderMismatched(existingProvider: string, userAccount: any) {
 		return (
 			(existingProvider == 'Google' && userAccount.user.GoogleUser == null) ||
 			(existingProvider == 'Facebook' && userAccount.user.FacebookUser == null)

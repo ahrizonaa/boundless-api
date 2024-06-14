@@ -1,19 +1,21 @@
+import { MongoClient } from "mongodb";
+
 export class Logger {
 	mongoClient;
 	dbName;
-	constructor(mongoClient, dbName) {
+	constructor(mongoClient: MongoClient, dbName: string) {
 		this.mongoClient = mongoClient;
 		this.dbName = dbName;
 	}
 
-	async log(log) {
+	async log(log: any) {
 		return await this.mongoClient
 			.db(this.dbName)
 			.collection('Logs')
 			.insertOne(log);
 	}
 
-	async info(log) {
+	async info(log: any) {
 		log = {
 			...log,
 			type: 'info',
@@ -25,7 +27,7 @@ export class Logger {
 			.insertOne(log);
 	}
 
-	async debug(log) {
+	async debug(log: any) {
 		log = {
 			...log,
 			type: 'debug',
@@ -37,7 +39,7 @@ export class Logger {
 			.insertOne(log);
 	}
 
-	async error(log) {
+	async error(log: any) {
 		log = {
 			...log,
 			type: 'error',

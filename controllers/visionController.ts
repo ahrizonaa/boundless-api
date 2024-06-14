@@ -1,12 +1,12 @@
 import { Controller } from './controller.js';
-import { ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import fetch from 'node-fetch';
 
 export class VisionController extends Controller {
-	constructor(c, d) {
+	constructor(c: MongoClient, d: string) {
 		super(c, d);
 
-		this.post('/textdetection', async (req, res) => {
+		this.router.post('/textdetection', async (req, res) => {
 			try {
 				let imgBase64Str = req.body.imgBase64Str;
 

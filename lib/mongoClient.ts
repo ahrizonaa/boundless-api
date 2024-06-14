@@ -1,10 +1,12 @@
 import { MongoClient } from 'mongodb';
 import { Utils } from './utils.js';
 import { config } from 'dotenv';
-config();
+import findConfig from 'find-config';
 
-const mongoClient = Utils.createMongoClient(
-	process.env.MONGODB_CONNECTION_STRING
+config({ path: findConfig('.env') as string });
+
+const mongoClient: MongoClient = Utils.createMongoClient(
+	process.env.MONGODB_CONNECTION_STRING as string
 );
 
 const connect = async (client: MongoClient) => {

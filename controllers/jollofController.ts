@@ -1,43 +1,44 @@
 import { Controller } from './controller.js';
-import { ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import jollofService from '../services/jollofService.js';
 import { s3Client } from '../lib/s3Client.js';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { PutObjectCommand, PutObjectCommandInput } from '@aws-sdk/client-s3';
 
 import multer from 'multer';
+import { Request, Response } from 'express';
 
 var upload = multer({ storage: multer.memoryStorage() });
 
 export class JollofController extends Controller {
-	constructor(mongoClient, dbName) {
+	constructor(mongoClient: MongoClient, dbName: string) {
 		super(mongoClient, dbName);
 
-		this.get('/home', async (req, res) => {
+		this.router.get('/home', async (req: Request, res: Response) => {
 			res.status(200).send('Jollof API is online');
 		});
 
-		this.post('/log', async (req, res) => {
+		this.router.post('/log', async (req: Request, res: Response) => {
 			try {
 				let result = await this.logger.log(req.body);
 				res.status(200).send(result);
-			} catch (exception) {
+			} catch (exception: any) {
 				res.status(500).send(exception.message);
 			}
 		});
 
-		this.post('/signup', async (req, res) => {
+		this.router.post('/signup', async (req: Request, res: Response) => {
 			try {
 				let data = await this.mongoClient
 					.db(this.dbName)
 					.collection('Users')
 					.insertOne(req.body);
 				res.send(data);
-			} catch (err) {
+			} catch (err: any) {
 				res.status(500).send(err.message);
 			}
 		});
 
-		this.post('/updateprofile', async (req, res) => {
+		this.router.post('/updateprofile', async (req: Request, res: Response) => {
 			try {
 				let result = await this.mongoClient
 					.db(this.dbName)
@@ -53,20 +54,19 @@ export class JollofController extends Controller {
 						}
 					);
 				res.send(result);
-			} catch (err) {
+			} catch (err: any) {
 				res.status(500).send(err.message);
 			}
 		});
 
-		this.post('/uploadphoto', upload.single('image'), async (req, res) => {
-			console.log('body', req.file);
+		this.router.post('/uploadphoto', upload.single('image'), async (req: Request, res: Response) => {
 			try {
 				let filename = 'jollof/users/' + String(req.body.id) + '/profile.png';
-				let params = {
+				let params: PutObjectCommandInput = {
 					Bucket: 'mydea',
 					Key: filename,
-					Body: req.file.buffer,
-					ContentType: req.file.mimetype,
+					Body: req.file!.buffer as Buffer,
+					ContentType: req.file!.mimetype,
 					ACL: 'public-read'
 				};
 
@@ -90,12 +90,12 @@ export class JollofController extends Controller {
 				res.send({
 					profilePhotoUrl: remoteFileUrl
 				});
-			} catch (err) {
+			} catch (err: any) {
 				res.status(500).send(err.message);
 			}
 		});
 
-		this.post('/unlinkgoogle', async (req, res) => {
+		this.router.post('/unlinkgoogle', async (req: Request, res: Response) => {
 			try {
 				let result = await this.mongoClient
 					.db(this.dbName)
@@ -111,12 +111,12 @@ export class JollofController extends Controller {
 						}
 					);
 				res.send(result);
-			} catch (err) {
-				this.status(500).send(err.message);
+			} catch (err: any) {
+				res.status(500).send(err.message);
 			}
 		});
 
-		this.post('/unlinkfacebook', async (req, res) => {
+		this.router.post('/unlinkfacebook', async (req: Request, res: Response) => {
 			try {
 				let result = await this.mongoClient
 					.db(this.dbName)
@@ -132,12 +132,12 @@ export class JollofController extends Controller {
 						}
 					);
 				res.send(result);
-			} catch (err) {
-				this.status(500).send(err.message);
+			} catch (err: any) {
+				res.status(500).send(err.message);
 			}
 		});
 
-		this.post('/finduser', async (req, res) => {
+		this.router.post('/finduser', async (req: Request, res: Response) => {
 			let userSearchResult = null;
 			try {
 				userSearchResult = await this.mongoClient
@@ -175,7 +175,7 @@ export class JollofController extends Controller {
 							.updateOne(query, update);
 					}
 				}
-			} catch (err) {
+			} catch (err: any) {
 				res.status(500).send(err.message).end();
 			}
 			res.send(userSearchResult);
