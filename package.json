@@ -2,7 +2,7 @@
   "name": "mongodb.api",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
