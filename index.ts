@@ -17,8 +17,11 @@ const httpServer: Server = server.listen(port, () => {
 	console.log(`Listening at port ${port}`);
 });
 
-httpServer.on('upgrade', (request: IncomingMessage, socket: internal.Duplex, head: Buffer) => {
-	wss.handleUpgrade(request, socket, head, (client: WebSocket) => {
-		wss.emit('connection', client, request);
-	});
-});
+httpServer.on(
+	'upgrade',
+	(request: IncomingMessage, socket: internal.Duplex, head: Buffer) => {
+		wss.handleUpgrade(request, socket, head, (client: WebSocket) => {
+			wss.emit('connection', client, request);
+		});
+	}
+);

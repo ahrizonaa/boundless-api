@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, NextFunction } from 'express';
 import { WebSocketServer } from 'ws';
 import cors from 'cors';
 import { mongoClient } from '../lib/mongoClient.js';
@@ -14,34 +14,73 @@ const wss: WebSocketServer = new WebSocketServer({
 	noServer: true
 });
 
-const defaultController: Application = new IndexController(mongoClient, 'Mydeas') as unknown as Application
+const indexController = new IndexController(
+	mongoClient,
+	''
+) as unknown as Application;
 
 const nimbelwearController: Application = new NimblewearController(
 	mongoClient,
 	'NimbelWear'
-) as unknown as Application
-const jollofController: Application = new JollofController(mongoClient, 'Jollof') as unknown as Application
+) as unknown as Application;
+const jollofController: Application = new JollofController(
+	mongoClient,
+	'Jollof'
+) as unknown as Application;
 
-const hostControllerMap: any = {
-	'boundless-api-ltlq6.ondigitalocean.app': defaultController,
-	'api.nimbelwear.app': nimbelwearController,
-	'api.jolloftkn.com': jollofController,
-	'api.nightowlvibes.app': null as unknown as Application
+const nightowlController = null as unknown as Application;
+
+const domainToApp: any = {
+	'boundless-api-ltlq6.ondigitalocean.app': 'index',
+	'api.nimbelwear.app': 'NimbelWear',
+	'localhost:8102': 'NimbelWear',
+	'api.jolloftkn.com': 'Jollof',
+	'localhost:8101': 'Jollof',
+	'api.nocturne-app.com': 'NightOwl',
+	'localhost:8103': 'NightOwl'
 };
+
+const appToController: any = {
+	index: indexController,
+	NimbelWear: nimbelwearController,
+	Jollof: jollofController,
+	NightOwl: nightowlController
+};
+
+const commonRoutes: string[] = [
+	'/finduser',
+	'/signup',
+	'/updateprofile',
+	'/uploadphoto',
+	'/unlinksocial'
+];
 
 server.set('json spaces', 4);
 server.use(cors());
 server.use(express.json({ limit: '50mb' }));
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.static('public'));
-server.use('/', defaultController.router as any);
 server.use((req, res, next) => {
-	const host = req.get('host') as string;
+	let controller;
+	const origin = req.headers.origin as string;
+	const domain = origin
+		.replace('https://', '')
+		.replace('http://', '')
+		.replace(/\/$/, '');
+	const app = domainToApp[domain];
+	req.query['application'] = app;
 
-	const controller = hostControllerMap[host] || defaultController;
+	console.log(req.originalUrl);
+
+	if (commonRoutes.includes(req.originalUrl.toLowerCase())) {
+		controller = indexController;
+	} else {
+		controller = appToController[domain] || indexController;
+	}
 
 	controller.router(req, res, next);
 });
+server.use('/', indexController.router as any);
 
 wss.on('connection', async function (ws) {
 	console.log('new wss conneciton established');

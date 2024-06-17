@@ -1,12 +1,10 @@
 import { Controller } from './controller.js';
 import { MongoClient, ObjectId } from 'mongodb';
 import jollofService from '../services/jollofService.js';
-import { s3Client } from '../lib/s3Client.js';
 import { PutObjectCommand, PutObjectCommandInput } from '@aws-sdk/client-s3';
-
-import multer from 'multer';
 import { Request, Response } from 'express';
-
+import multer from 'multer';
+import { s3Client } from '../lib/s3Client.js';
 var upload = multer({ storage: multer.memoryStorage() });
 
 export class JollofController extends Controller {
@@ -24,161 +22,6 @@ export class JollofController extends Controller {
 			} catch (exception: any) {
 				res.status(500).send(exception.message);
 			}
-		});
-
-		this.router.post('/signup', async (req: Request, res: Response) => {
-			try {
-				let data = await this.mongoClient
-					.db(this.dbName)
-					.collection('Users')
-					.insertOne(req.body);
-				res.send(data);
-			} catch (err: any) {
-				res.status(500).send(err.message);
-			}
-		});
-
-		this.router.post('/updateprofile', async (req: Request, res: Response) => {
-			try {
-				let result = await this.mongoClient
-					.db(this.dbName)
-					.collection('Users')
-					.updateOne(
-						{
-							'user.email': req.body.user.email
-						},
-						{
-							$set: {
-								'user.profile': req.body.user.profile
-							}
-						}
-					);
-				res.send(result);
-			} catch (err: any) {
-				res.status(500).send(err.message);
-			}
-		});
-
-		this.router.post('/uploadphoto', upload.single('image'), async (req: Request, res: Response) => {
-			try {
-				let filename = 'jollof/users/' + String(req.body.id) + '/profile.png';
-				let params: PutObjectCommandInput = {
-					Bucket: 'mydea',
-					Key: filename,
-					Body: req.file!.buffer as Buffer,
-					ContentType: req.file!.mimetype,
-					ACL: 'public-read'
-				};
-
-				let s3Result = await s3Client.send(new PutObjectCommand(params));
-
-				let remoteFileUrl = process.env.SPACES_CDN + '/' + filename;
-
-				let dbResult = await mongoClient
-					.db('Jollof')
-					.collection('Users')
-					.updateOne(
-						{
-							'user.email': req.body.email
-						},
-						{
-							$set: {
-								'user.profilePhotoUrl': remoteFileUrl
-							}
-						}
-					);
-				res.send({
-					profilePhotoUrl: remoteFileUrl
-				});
-			} catch (err: any) {
-				res.status(500).send(err.message);
-			}
-		});
-
-		this.router.post('/unlinkgoogle', async (req: Request, res: Response) => {
-			try {
-				let result = await this.mongoClient
-					.db(this.dbName)
-					.collection('Users')
-					.updateOne(
-						{
-							'user.email': req.body.user.email
-						},
-						{
-							$set: {
-								'user.GoogleUser': null
-							}
-						}
-					);
-				res.send(result);
-			} catch (err: any) {
-				res.status(500).send(err.message);
-			}
-		});
-
-		this.router.post('/unlinkfacebook', async (req: Request, res: Response) => {
-			try {
-				let result = await this.mongoClient
-					.db(this.dbName)
-					.collection('Users')
-					.updateOne(
-						{
-							'user.email': req.body.user.email
-						},
-						{
-							$set: {
-								'user.FacebookUser': null
-							}
-						}
-					);
-				res.send(result);
-			} catch (err: any) {
-				res.status(500).send(err.message);
-			}
-		});
-
-		this.router.post('/finduser', async (req: Request, res: Response) => {
-			let userSearchResult = null;
-			try {
-				userSearchResult = await this.mongoClient
-					.db(this.dbName)
-					.collection('Users')
-					.findOne({ 'user.email': req.body.user.email });
-
-				if (userSearchResult != null) {
-					if (
-						jollofService.isProviderMismatched(
-							req.body.provider,
-							userSearchResult
-						)
-					) {
-						let query = { 'user.email': req.body.user.email };
-						let update;
-						if (req.body.provider == 'Google') {
-							update = {
-								$set: {
-									'user.GoogleUser': req.body.user
-								}
-							};
-							userSearchResult.user.GoogleUser = req.body.user;
-						} else {
-							update = {
-								$set: {
-									'user.FacebookUser': req.body.user
-								}
-							};
-							userSearchResult.user.FacebookUser = req.body.user;
-						}
-						await this.mongoClient
-							.db(this.dbName)
-							.collection('Users')
-							.updateOne(query, update);
-					}
-				}
-			} catch (err: any) {
-				res.status(500).send(err.message).end();
-			}
-			res.send(userSearchResult);
 		});
 	}
 }

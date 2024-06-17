@@ -1,0 +1,10 @@
+{
+	"watch": ["./"],
+	"ignore": ["dist/**/*"],
+	"ext": "ts",
+	"exitcrash": true,
+	"exec": "npm run build && npm start",
+	"events": {
+		"restart": "clear"
+	}
+}
