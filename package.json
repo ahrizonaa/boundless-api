@@ -4,10 +4,6 @@
 	"description": "",
 	"main": "dist/index.js",
 	"type": "module",
-	"publishConfig": {
-		"registry": "https://registry.npmjs.org/",
-		"@ahrizona:registry": "https://registry.npmjs.org/:_authToken=${NPM_TOKEN}"
-	},
 	"scripts": {
 		"start": "node dist/index.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -18,7 +14,6 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@ahrizona/common": "latest",
 		"@aws-sdk/client-s3": "^3.583.0",
 		"@googleapis/docs": "^2.0.0",
 		"@types/find-config": "^1.0.4",

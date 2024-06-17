@@ -6,7 +6,6 @@ import { PutObjectCommand, PutObjectCommandInput } from '@aws-sdk/client-s3';
 import multer from 'multer';
 import { s3Client } from '../lib/s3Client.js';
 var upload = multer({ storage: multer.memoryStorage() });
-import { ProviderUser, Provider } from '@ahrizona/common/lib/interfaces/IAccountService.js';
 
 class IndexController extends Controller {
 	constructor(c: MongoClient, d: string) {
@@ -121,12 +120,7 @@ class IndexController extends Controller {
 			}
 		});
 
-		type UserBody = {
-			providerUser: ProviderUser;
-			provider: Provider;
-		}
-
-		this.router.post('/finduser', async (req: Request<{}, any, UserBody, any, any>, res: Response) => {
+		this.router.post('/finduser', async (req: Request, res: Response) => {
 			let userSearchResult = null;
 
 			try {
