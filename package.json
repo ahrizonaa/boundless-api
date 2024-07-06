@@ -8,8 +8,7 @@
 		"start": "node dist/index.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "tsc",
-		"watch": "nodemon",
-		"dev": "tsc --watch"
+		"dev": "nodemon --exec \"node --loader ts-node/esm index.ts\""
 	},
 	"author": "",
 	"license": "ISC",
@@ -43,6 +42,7 @@
 		"nodemon": "^2.0.16",
 		"prettier": "^2.6.2",
 		"ts-node": "^10.9.2",
+		"ts-node-dev": "^2.0.0",
 		"tsx": "^4.15.4",
 		"typescript": "^5.4.5"
 	}

@@ -70,15 +70,22 @@ server.use((req, res, next) => {
 	const app = domainToApp[domain];
 	req.query['application'] = app;
 
-	console.log(req.originalUrl);
 
 	if (commonRoutes.includes(req.originalUrl.toLowerCase())) {
 		controller = indexController;
+		console.log(
+			`request [${req.originalUrl} ${req.method}] routing to Index controller`
+		);
 	} else {
 		controller = appToController[domain] || indexController;
+		console.log(
+			`request [${req.originalUrl} ${req.method}] routing to ${domainToApp[domain]} controller`
+		);
 	}
 
-	controller.router(req, res, next);
+
+	let router = controller.router as express.Router;
+	router(req, res, next);
 });
 server.use('/', indexController.router as any);
 
@@ -103,5 +110,7 @@ wss.on('connection', async function (ws) {
 		console.log('closing client connection');
 	});
 });
+
+console.log('Server Ready')
 
 export { server, wss };
