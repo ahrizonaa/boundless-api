@@ -46,6 +46,8 @@ server.use((req, res, next) => {
 	const app: string = domainToApp[domain];
 	req.query['application'] = app;
 
+	console.debug({ origin, domain, app })
+
 	if (!app) {
 		res
 			.status(500)
