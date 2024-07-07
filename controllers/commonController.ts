@@ -7,12 +7,9 @@ import multer from 'multer';
 import { s3Client } from '../lib/s3Client.js';
 var upload = multer({ storage: multer.memoryStorage() });
 
-class IndexController extends Controller {
-	constructor(c: MongoClient, d: string) {
-		super(c, d);
-		this.router.get('/', (req: Request, res: Response) => {
-			res.sendFile(process.cwd() + '/public/index.html');
-		});
+class CommonController extends Controller {
+	constructor() {
+		super('');
 
 		this.router.post('/signup', async (req: Request, res: Response) => {
 			try {
@@ -164,7 +161,16 @@ class IndexController extends Controller {
 			}
 			res.send(userSearchResult);
 		});
+
+		this.router.post('/log', async (req, res) => {
+			try {
+				let result = await this.logger.log(req.body, req.query['application'] as string);
+				res.status(200).send(result);
+			} catch (err: any) {
+				res.status(500).send(err.message);
+			}
+		});
 	}
 }
 
-export { IndexController };
+export { CommonController };

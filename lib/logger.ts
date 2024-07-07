@@ -8,9 +8,9 @@ export class Logger {
 		this.dbName = dbName;
 	}
 
-	async log(log: any) {
+	async log(log: any, dbname: string) {
 		return await this.mongoClient
-			.db(this.dbName)
+			.db(dbname ? dbname : this.dbName)
 			.collection('Logs')
 			.insertOne(log);
 	}

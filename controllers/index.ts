@@ -1,8 +1,8 @@
-import { IndexController } from './indexController.js';
+import { CommonController } from './commonController.js';
 import { NimblewearController } from './nimblewearController.js';
 import { JollofController } from './jollofController.js';
 export {
-	IndexController,
+	CommonController,
 	NimblewearController,
 	JollofController
 };

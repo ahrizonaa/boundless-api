@@ -8,20 +8,11 @@ import { s3Client } from '../lib/s3Client.js';
 var upload = multer({ storage: multer.memoryStorage() });
 
 export class JollofController extends Controller {
-	constructor(mongoClient: MongoClient, dbName: string) {
-		super(mongoClient, dbName);
+	constructor() {
+		super('Jollof');
 
 		this.router.get('/home', async (req: Request, res: Response) => {
 			res.status(200).send('Jollof API is online');
-		});
-
-		this.router.post('/log', async (req: Request, res: Response) => {
-			try {
-				let result = await this.logger.log(req.body);
-				res.status(200).send(result);
-			} catch (exception: any) {
-				res.status(500).send(exception.message);
-			}
 		});
 	}
 }
