@@ -34,7 +34,8 @@ const domainToApp: any = {
 	'api.jolloftkn.com': 'Jollof',
 	'localhost:8101': 'Jollof',
 	'api.nocturne-app.com': 'NightOwl',
-	'localhost:8103': 'NightOwl'
+	'localhost:8103': 'NightOwl',
+	'capacitor://localhost': 'NimbelWear'
 };
 
 server.use((req, res, next) => {
@@ -64,7 +65,6 @@ server.use((req, res, next) => {
 		let newurl = '/' + app.toLowerCase() + req.url;
 		console.log('[url transform]', req.url + ' -> ' + newurl);
 		req.url = newurl;
-		console.log(req.url)
 	}
 	next();
 });
