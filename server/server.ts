@@ -20,12 +20,12 @@ const wss: WebSocketServer = new WebSocketServer({
 	noServer: true
 });
 
-const commonController = new CommonController()
+const commonController = new CommonController();
 
-const nimbelwearController = new NimblewearController()
-const jollofController = new JollofController()
+const nimbelwearController = new NimblewearController();
+const jollofController = new JollofController();
 
-const nightowlController = null
+const nightowlController = null;
 
 const domainToApp: any = {
 	'boundless-api-ltlq6.ondigitalocean.app': 'index',
@@ -39,6 +39,10 @@ const domainToApp: any = {
 };
 
 server.use((req, res, next) => {
+	let resolveddomain = req.headers['x-forwarded-host'];
+
+	console.log('resolved domain', resolveddomain);
+
 	const origin = req.headers.origin as string;
 	const domain = origin
 		.replace('https://', '')
@@ -47,7 +51,7 @@ server.use((req, res, next) => {
 	const app: string = domainToApp[domain];
 	req.query['application'] = app;
 
-	console.debug({ origin, domain, app })
+	console.debug({ origin, domain, app });
 
 	if (!app) {
 		res
@@ -56,7 +60,7 @@ server.use((req, res, next) => {
 				'No app matched domain.  Are you running locally with correct port?'
 			);
 	}
-	next()
+	next();
 });
 
 server.use((req, res, next) => {
@@ -78,8 +82,8 @@ server.use('/', (req, res) => {
 });
 
 server.use((req, res) => {
-	res.status(404).send(`${req.originalUrl} not found`)
-})
+	res.status(404).send(`${req.originalUrl} not found`);
+});
 
 wss.on('connection', async function (ws) {
 	console.log('new wss conneciton established');
@@ -103,6 +107,6 @@ wss.on('connection', async function (ws) {
 	});
 });
 
-console.log('Server Ready')
+console.log('Server Ready');
 
 export { server, wss };
