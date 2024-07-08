@@ -39,9 +39,10 @@ const domainToApp: any = {
 };
 
 server.use((req, res, next) => {
-	let resolveddomain = req.headers['x-forwarded-host'];
+	let forwardedHost = req.headers['x-forwarded-host'];
+	let host = req.get('host');
 
-	console.log('resolved domain', resolveddomain);
+	console.log({ forwardedHost, host });
 
 	const origin = req.headers.origin as string;
 	const domain = origin
@@ -51,7 +52,7 @@ server.use((req, res, next) => {
 	const app: string = domainToApp[domain];
 	req.query['application'] = app;
 
-	console.debug({ origin, domain, app });
+	console.log({ origin, domain, app });
 
 	if (!app) {
 		res
