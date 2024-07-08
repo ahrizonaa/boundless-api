@@ -41,6 +41,7 @@ const domainToApp: any = {
 server.use((req, res, next) => {
 	let forwardedHost = req.headers['x-forwarded-host'];
 	let host = req.get('host');
+	let app: string;
 
 	console.log({ forwardedHost, host });
 
@@ -48,8 +49,15 @@ server.use((req, res, next) => {
 	const domain = origin
 		.replace('https://', '')
 		.replace('http://', '')
-		.replace(/\/$/, '');
-	const app: string = domainToApp[domain];
+		.replace(/\/$/, '')
+		.toLowerCase();
+
+	if (domain == 'capacitor://localhost' && host) {
+		app = domainToApp[host] as string;
+	} else {
+		app = domainToApp[domain];
+	}
+
 	req.query['application'] = app;
 
 	console.log({ origin, domain, app });
